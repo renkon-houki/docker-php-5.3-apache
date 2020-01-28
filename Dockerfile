@@ -42,7 +42,7 @@ RUN mkdir -p $PHP_INI_DIR/conf.d
 
 # php 5.3 needs older autoconf
 RUN set -x \
-	&& apt-get update && apt-get install -y autoconf2.13 && rm -r /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y autoconf2.13 zlib1g-dev libzip-dev && rm -r /var/lib/apt/lists/* \
 	&& curl -SLO http://launchpadlibrarian.net/140087283/libbison-dev_2.7.1.dfsg-1_amd64.deb \
 	&& curl -SLO http://launchpadlibrarian.net/140087282/bison_2.7.1.dfsg-1_amd64.deb \
 	&& dpkg -i libbison-dev_2.7.1.dfsg-1_amd64.deb \
@@ -60,6 +60,7 @@ RUN set -x \
 		$(command -v apxs2 > /dev/null 2>&1 && echo '--with-apxs2' || true) \
     --with-config-file-path="$PHP_INI_DIR" \
     --with-config-file-scan-dir="$PHP_INI_DIR/conf.d" \
+    		--with-zlib \
 		--with-mysql \
 		--with-mysqli \
 		--with-pdo-mysql \
